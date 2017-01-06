@@ -3,9 +3,19 @@ language: java
 jdk:
   - oraclejdk8
 
+addons:
+  sonarqube:
+    token:
+      secure: yjhH0ebYVFN+YTNK/il30eqzFUnGT3q/hwqP1ssb28469qVhdLUdL6O1frbm8cr0lsOsY1qSBGmij1ICkambsj2JbyFu4wG0VLcZSf/BW7/5ee/+ZzgclSHdZxRf6CNnIT+KycNSpE9hYZbYnqpVVAl6+Qr6MPE3+O0TB6bE6iMckqkHDfrYbPy1gf6EEJULT9D5Lfb1bAaDb5dN2vj3QO6gv4fngkE9QBb1uUI2kHWfeyIaX7ECNvGSTJ14N7D9uveKvamf4nkl41BqYyAts8mUwKzPvx1vfyCtXm19gLej1DMePxMoDEP7U/jw75HdwoNgKntYfPrpPBPPrEsdp8SuujgOVpg/ed0TocEe7i1btJx9BfUjWV2P3UfQq9DHlO5RmJ8YonHhOUJeWv9V0JGDOmFSnxPkNBW5PAaSdfXo92HnPy2DyNxYRPbbQo003Ti40p2mWBJysSobRI9MmAOEC2PnJzSouqILxOlh7S5/FRPBt5hd9mDo9jpHCx9SBuaMfpU/eQ9OPFkFTYsJ6r7z07z6qjjt+Glme6D+5LDd/aR8/U/HzZ8JV+akTnCIdnmSE9cEKj8wX4eTcgfGCl1QTrXLeQZ5zZW6uuuNFnyZKTlU4ecQlGmje7X94SZJkh+otRmh/zVzTsFISEDxzV/U5VERCoJbEc00ygg0lig=
+    github_token:
+      secure: vMgrinfF6nM7kY2xZKXzayvuuRwsJBHxjeVSAf2LHuN/4o+EskPGUb86EeLdZmpVmlJYf/PFnHHyVZq+8cNDxJqoIp44fDOQ5TTZEjgtF3neohTpkjZ4WU/aXCnytRRLVO0x9ut6e7QzDhYiLH9pYF1vVjyrVmD/bbCkdfKXo7lQK1BnFIDe1WVsRS8gNt8hYmpCRkeoJWKDe5n/JnSodkKoVSaPQm3LAsU3UJLda7A6poryYXnzQzMOx+IjU6WdMIQHvEbmuqjjzKL83yDeM6uMr6a1Xyh2umVI9RJfc+wX/z1lxmtbE2OiIphu9/NfAtQc4tLAWN8fs6QQOQyGkFL0Y33Nm6OaxiUwR5cdrH3HRt6pcc6JsgTZcn3gdtjba4y8c+eulCnQkhCpTw8ZY/hxWjVPaZ1HX/QX0Iq+K1lzdkVe+z608c8AqODnVUx06WadVkX22gWJP8+Bt7cJ+dR+GOl9KZfpupPCtIkV/szj4BQz7PTx+8vSgcty+5fttclS4a9MLBb8S8LLYiGvIMQc05pyY4BqKXGYWDELnRjYRs26PFxL7S9ZvOtMG9AysXtu4xXhFzifYjWacpLvbN0zNS/mum1XQf5UKolPoMnolCFmvxt+TNt2HKQ0x4M3lVulB9OHKfVvvJxLmNj73nCkpK0KDODwubY6B0OXVvE=
+
 before_script:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - sleep 3 # give xvfb some time to start
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - sleep 3
 
 script: gradle cucumber
+
+after_script:
+  - "sonar-scanner -Dsonar.host.url=http://sonar.liepins.me -Dsonar.projectKey=example -Dsonar.sources=."
