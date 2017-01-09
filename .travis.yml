@@ -21,7 +21,6 @@ before_script:
   - sh -e /etc/init.d/xvfb start
   - sleep 3
 
-script: gradle cucumber
-
-after_script:
+script:
+  - gradle cucumber
   - "sonar-scanner -Dsonar.host.url=http://sonar.liepins.me -Dsonar.projectKey=example -Dsonar.sources=."
