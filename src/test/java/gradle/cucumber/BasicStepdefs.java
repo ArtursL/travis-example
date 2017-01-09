@@ -41,6 +41,10 @@ public class BasicStepdefs {
         assertThat(driver.getTitle(), startsWith(title));
     }
 
+    public void empty() {
+
+    }
+
     @After()
     public void closeBrowser() {
         driver.quit();
