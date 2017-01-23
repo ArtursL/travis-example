@@ -1,6 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'maven'
 
+group = 'me.liepins.travis-example'
 
 configurations {
     cucumberRuntime {
@@ -30,4 +31,25 @@ dependencies {
 
 repositories {
     mavenCentral()
+    maven {
+        credentials {
+            username "${nexusUsername}"
+            password "${nexusPassword}"
+        }
+        url "${nexusUrl}/repository/travis-example"
+    }
 }
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "${nexusUrl}/repository/travis-example/") {
+                authentication(userName: nexusUsername, password: nexusPassword)
+            }
+            snapshotRepository(url: "${nexusUrl}/repository/travis-example/") {
+                authentication(userName: nexusUsername, password: nexusPassword)
+            }
+        }
+    }
+}
+

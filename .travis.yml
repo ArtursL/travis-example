@@ -9,6 +9,12 @@ cache:
     - $HOME/.gradle
     - $HOME/.sonar
 
+env:
+  global:
+    - ORG_GRADLE_PROJECT_nexusUrl=http://nexus.liepins.me:8081
+    - ORG_GRADLE_PROJECT_nexusUsername=travis
+    - secure: VzqpfgmenXr4gNXX4b7TO1oAjH8PEe0abVCXoSD1WbsLv0m7Qy7Rf0z/n0+Nr3QCEgZ/rUWx+QjiWdlX/EVTB2wEiC3/LHGSgaWLv8j6et3YemH8G4jhJZgF5aXv57HD31EnHEjKkjrJlW5llCcd8phnGMzoA8lYjUMc2L2DO/OUZXVnpie9liAjpH7ZiOlDeXplwAGh8oIqlgD79nCX41PVV0hgAmn5wqftYUnQikqeuJBN78bPYRpfSjmxsogrNzSoyTEOyE5G53T+qKYCHg686yDF0NgJ5Z2uhRKhG7PY5N5hli2O7P28IvDb4UD2NuLvrlxOqJgAZdGY22EcNMzfKLi9YY+ocAVc1EWcs10oODXuqSc+/V/9uSTK+js9iu3b0TzoHzcY3dt71vLJmRuVjal/JTCJgJynUymiz8syR92qrMXzO22J/pDArt14dNxp2/PkiBIHnzWvvPhKLEg9t7bVCedqcYvziCiKgaBpNVf/YzJAKWXYe4lIPUCaW2KYkeHcDCNHSk8d+xjeY9uCGEGXW3wABGTt6TloIULN8EfePGMQB2kUSDbHivOwns5l6KWqwSTSQK70wPGjc5PenZOguyGV+iqtmOf8RT3KQWy2yj/j1wnHrL65MilnQ7+sWPzZh1aG8HUz80Odmo92fUigdK3C9laIYnGT2Nk=
+
 addons:
   sonarqube:
     token:
@@ -23,4 +29,7 @@ before_script:
 
 script:
   - gradle cucumber
-  - "sonar-scanner -Dsonar.host.url=http://sonar.liepins.me -Dsonar.projectKey=example -Dsonar.sources=."
+  - sonar-scanner -Dsonar.host.url=http://sonar.liepins.me -Dsonar.projectKey=example -Dsonar.sources=.
+
+after_success:
+  - gradle uploadArchives
